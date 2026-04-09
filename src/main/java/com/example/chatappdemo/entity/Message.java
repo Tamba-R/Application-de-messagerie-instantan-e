@@ -1,15 +1,13 @@
 package com.example.chatappdemo.entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Generated;
 import lombok.NoArgsConstructor;
 
+import java.awt.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -19,7 +17,24 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Message {
 
-    @id
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column(columnDefinition = "TEXT")
+    private String content;
+
+    private LocalDateTime timestamp;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "sender_id")
+    private User sender;
+
+    @Enumerated(EnumType.STRING)
+    private MessageType type;
+
+    public  enum MessageType{
+        CHAT, JOIN, LEAVE, TYPING
+    }
 }

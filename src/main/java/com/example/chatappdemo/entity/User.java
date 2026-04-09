@@ -19,12 +19,17 @@ import java.util.List;
 @NoArgsConstructor
 public class User {
 
-    @id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column(unique = true, nullable = false)
     private String username;
+
     private String avatarColor;
+
     private LocalDateTime Lastseen;
+
     private boolean isOnline;
 
     @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
